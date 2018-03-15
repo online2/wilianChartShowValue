@@ -18,7 +18,7 @@
         如：老数据数据有负值，但新数据没有负值 getZeroPosition的值不会改变，反之相同，只能重新设置一下数据才可以<br>
         
 
-2：提供了LineChartView 的绘制Value方法 <br>
+2：提供了LineChartView 的绘制Value方法 <br> 具体使用方法可以看LineCardOne里面使用<br>
         设置方法如下 <br>
                        //设置开启绘制文字<br>
                          .setEnableDrawValue(true) <br>
