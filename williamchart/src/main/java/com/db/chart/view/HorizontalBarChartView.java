@@ -82,8 +82,8 @@ public class HorizontalBarChartView extends BaseBarChartView {
                 // Style it!
                 if (!bar.hasGradientColor()) mStyle.barPaint.setColor(bar.getColor());
                 else
-                    mStyle.barPaint.setShader(new LinearGradient(this.getZeroPosition(), bar.getY(), bar.getX(), bar.getY(), bar.getGradientColors(), bar.getGradientPositions(), Shader.TileMode
-                            .MIRROR));
+                    mStyle.barPaint.setShader(new LinearGradient(this.getZeroPosition(), bar.getY(), bar.getX(), bar.getY(),
+                            bar.getGradientColors(), bar.getGradientPositions(), Shader.TileMode.MIRROR));
                 applyShadow(mStyle.barPaint, barSet.getAlpha(), bar.getShadowDx(), bar.getShadowDy(), bar.getShadowRadius(), bar.getShadowColor());
 
                 // Draw background

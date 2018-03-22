@@ -116,16 +116,22 @@ public class StackedCardOne extends CardController {
         thresPaint.setStrokeWidth(Tools.fromDpToPx(.75f));
 
         BarSet stackBarSet = new BarSet(mLabels, mValuesOne[0]);
-        stackBarSet.setColor(Color.parseColor("#a1d949"));
+        stackBarSet.setGradientColor(new int[]{Color.parseColor("#5cffde"), Color.parseColor("#00d4fb")}, null);
         mChart.addData(stackBarSet);
 
         stackBarSet = new BarSet(mLabels, mValuesOne[1]);
-        stackBarSet.setColor(Color.parseColor("#ffcc6a"));
+        stackBarSet.setGradientColor(new int[]{Color.parseColor("#f7fe96"), Color.parseColor("#fdea11")}, null);
         mChart.addData(stackBarSet);
 
         stackBarSet = new BarSet(mLabels, mValuesOne[2]);
-        stackBarSet.setColor(Color.parseColor("#ff7a57"));
+//        stackBarSet.setColor(Color.parseColor("#ff7a57"));
+        stackBarSet.setGradientColor(new int[]{Color.parseColor("#000000"), Color.parseColor("#ffffff")}, null);
         mChart.addData(stackBarSet);
+//        mChart.setRoundCorners(Tools.fromDpToPx(4f));
+
+        mChart.setValueColor(Color.parseColor("#000000"));
+        mChart.setEnableDrawValue(true);
+        mChart.setValueTextSize(Tools.fromDpToPx(8));
 
         int[] order = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         mChart.setXLabels(XRenderer.LabelPosition.OUTSIDE)

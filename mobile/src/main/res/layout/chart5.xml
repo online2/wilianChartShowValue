@@ -3,7 +3,7 @@
     xmlns:williamchart="http://schemas.android.com/apk/res-auto"
     android:id="@+id/chart_card"
     android:layout_width="match_parent"
-    android:layout_height="175dp"
+    android:layout_height="400dp"
     android:layout_margin="@dimen/card_view_padding"
     williamchart:cardBackgroundColor="#ffffff"
     williamchart:cardCornerRadius="@dimen/card_view_roundcorner">

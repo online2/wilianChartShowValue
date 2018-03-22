@@ -18,8 +18,10 @@ package com.db.chart.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.LinearGradient;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 
 import com.db.chart.model.Bar;
@@ -110,7 +112,6 @@ public class StackBarChartView extends BaseStackBarChartView {
                 // Then no need to draw
                 if (!barSet.isVisible() || bar.getValue() == 0 || barSize < 2) continue;
 
-                mStyle.barPaint.setColor(bar.getColor());
                 applyShadow(mStyle.barPaint, barSet.getAlpha(), bar.getShadowDx(), bar
                         .getShadowDy(), bar.getShadowRadius(), bar.getShadowColor());
 
@@ -121,27 +122,26 @@ public class StackBarChartView extends BaseStackBarChartView {
 
                     y1 = zeroPosition - (barSize + verticalOffset);
 
+                    if (!bar.hasGradientColor()) mStyle.barPaint.setColor(bar.getColor());
+                    else mStyle.barPaint.setShader(new LinearGradient(x0, y1, x1, currBottomY,
+                            bar.getGradientColors(), bar.getGradientPositions(), Shader.TileMode.MIRROR));
+
                     // Draw bar
-                    if (j == bottomSetIndex) {
+                    if (j == bottomSetIndex) {//底部
                         drawBar(canvas, (int) x0, (int) y1, (int) x1, (int) currBottomY);
                         if (bottomSetIndex != topSetIndex && mStyle.cornerRadius != 0) {
                             // Patch top corners of bar
                             cornersPatch = (currBottomY - y1) / 2;
-                            canvas.drawRect(
-                                    new Rect((int) x0, (int) y1, (int) x1, (int) (y1 + cornersPatch)),
-                                    mStyle.barPaint);
+                            canvas.drawRect(new Rect((int) x0, (int) y1, (int) x1, (int) (y1 + cornersPatch)), mStyle.barPaint);
                         }
-
-                    } else if (j == topSetIndex) {
+                    } else if (j == topSetIndex) {//顶部
                         drawBar(canvas, (int) x0, (int) y1, (int) x1, (int) currBottomY);
                         // Patch bottom corners of bar
                         cornersPatch = (currBottomY - y1) / 2;
-                        canvas.drawRect(new Rect((int) x0, (int) (currBottomY - cornersPatch), (int) x1,
-                                (int) currBottomY), mStyle.barPaint);
+                        canvas.drawRect(new Rect((int) x0, (int) (currBottomY - cornersPatch), (int) x1, (int) currBottomY), mStyle.barPaint);
 
-                    } else { // if(j != bottomSetIndex && j != topSetIndex) { // Middle sets
-                        canvas.drawRect(new Rect((int) x0, (int) y1, (int) x1, (int) currBottomY),
-                                mStyle.barPaint);
+                    } else { // if(j != bottomSetIndex && j != topSetIndex) { // Middle sets//中间
+                        canvas.drawRect(new Rect((int) x0, (int) y1, (int) x1, (int) currBottomY), mStyle.barPaint);
                     }
 
                     currBottomY = y1;
@@ -154,6 +154,10 @@ public class StackBarChartView extends BaseStackBarChartView {
                 } else { // if(bar.getValue() < 0)
 
                     y1 = zeroPosition + (barSize - negVerticalOffset);
+
+                    if (!bar.hasGradientColor()) mStyle.barPaint.setColor(bar.getColor());
+                    else mStyle.barPaint.setShader(new LinearGradient(x0, y1, x1, currBottomY,
+                            bar.getGradientColors(), bar.getGradientPositions(), Shader.TileMode.MIRROR));
 
                     if (j == bottomSetIndex) {
                         drawBar(canvas, (int) x0, (int) negCurrBottomY, (int) x1, (int) y1);
