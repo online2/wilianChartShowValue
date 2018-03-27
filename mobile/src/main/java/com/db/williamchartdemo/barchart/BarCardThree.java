@@ -11,9 +11,12 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import com.db.chart.animation.Animation;
 import com.db.chart.model.BarSet;
 import com.db.chart.tooltip.Tooltip;
+import com.db.chart.util.Tools;
 import com.db.chart.view.BarChartView;
 import com.db.williamchartdemo.CardController;
 import com.db.williamchartdemo.R;
+
+import java.text.DecimalFormat;
 
 
 public class BarCardThree extends CardController {
@@ -25,16 +28,11 @@ public class BarCardThree extends CardController {
     private final BarChartView mChart;
 
     private final String[] mLabels =
-            {"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+            {"", "", "", "", "", "", "", "", "", ""};
 
     private final float[][] mValues =
-            {{2.5f, 3.7f, 4f, 8f, 4.5f, 4f, 5f, 7f, 10f, 14f, 12f, 6f, 7f, 8f, 9f, 8f, 9f, 8f, 7f,
-                    6f, 5f, 4f, 3f, 4f, 5f, 6f, 7f, 8f, 9f, 11f, 12f, 14, 13f, 10f, 9f, 8f, 7f, 5f,
-                    4f, 6f},
-                    {3.5f, 4.7f, 5f, 9f, 5.5f, 5f, 6f, 8f, 11f, 13f, 11f, 7f, 6f, 7f, 10f, 11f, 12f,
-                            9f, 8f, 7f, 6f, 5f, 4f, 3f, 6f, 7f, 8f, 9f, 10f, 12f, 13f, 11, 13f, 10f,
-                            8f, 7f, 5f, 4f, 3f, 7f}};
+            {{0f, 3.7f, 4f, 8f, 4.5f, 4f, 5f, 7f, 10f, -14f},
+                    {-3.5f, -4.7f, -5f, -9f, -5.5f, -5f, 6f, 8f, 11f, 13f}};
 
 
     public BarCardThree(CardView card, Context context) {
@@ -63,8 +61,16 @@ public class BarCardThree extends CardController {
         BarSet dataset = new BarSet(mLabels, mValues[0]);
         dataset.setColor(Color.parseColor("#eb993b"));
         mChart.addData(dataset);
-
+        //设置开启绘制文字
+        mChart.setEnableDrawValue(true);
+        //设置文字大小
+        mChart.setValueTextSize(Tools.fromDpToPx(9));
+        //设置文字颜色
+        mChart.setValueColor(Color.parseColor("#000000"));
+        //设置文字格式化和Y轴的使用的同一个代码
+        mChart.setLabelsFormat(new DecimalFormat("##人"));
         mChart.setTooltips(tip)
+                .setAxisBorderValues(-30,30)
                 .show(new Animation().setInterpolator(new AccelerateDecelerateInterpolator())
                         .withEndAction(action));
     }
