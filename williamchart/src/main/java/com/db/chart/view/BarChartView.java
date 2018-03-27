@@ -19,13 +19,16 @@ package com.db.chart.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
+import android.graphics.Paint;
 import android.graphics.Region;
 import android.graphics.Shader;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.db.chart.model.Bar;
 import com.db.chart.model.BarSet;
 import com.db.chart.model.ChartSet;
+import com.db.chart.util.TextMeasureUtil;
 
 import java.util.ArrayList;
 
@@ -91,12 +94,32 @@ public class BarChartView extends BaseBarChartView {
                     drawBarBackground(canvas, offset, this.getInnerChartTop(), offset + barWidth,
                             this.getInnerChartBottom());
                 }
+                if (getEnableDrawValue()) {
+                    String value = style.getLabelsFormat().format(bar.getValue());
+                    float textW = TextMeasureUtil.getTextWidth(mStyle.valuePaint,value);
+                    float textH = TextMeasureUtil.getTextHeight(mStyle.valuePaint,value);
+                    float textX = offset + (barWidth-textW)/2;
+                    if (bar.getValue()>=0){
+                        float textY = bar.getY()  -textH*0.7f;
+                        drawBarValue(canvas, textX, textY, value);
+                        drawBar(canvas, offset,bar.getY(), offset + barWidth, this.getZeroPosition());
+                    }else if (bar.getValue()<0){
+                        float textY = bar.getY()  + textH*1.3f;
+                        drawBarValue(canvas, textX, textY, value);
+                        drawBar(canvas, offset, this.getZeroPosition(), offset + barWidth, bar.getY());
+                    }
+//                    else {
+//                        drawBarValue(canvas, textX, bar.getY(), value);
+//                        drawBar(canvas, offset, this.getZeroPosition(), offset + barWidth,  bar.getY()-textW);
+//                    }
+                } else{
+                    // Draw bar
+                    if (bar.getValue() >= 0) // Positive
+                        drawBar(canvas, offset, bar.getY(), offset + barWidth, this.getZeroPosition());
+                    else // Negative
+                        drawBar(canvas, offset, this.getZeroPosition(), offset + barWidth, bar.getY());
+                }
 
-                // Draw bar
-                if (bar.getValue() >= 0) // Positive
-                    drawBar(canvas, offset, bar.getY(), offset + barWidth, this.getZeroPosition());
-                else // Negative
-                    drawBar(canvas, offset, this.getZeroPosition(), offset + barWidth, bar.getY());
 
                 offset += barWidth;
 

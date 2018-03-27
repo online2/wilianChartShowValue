@@ -32,4 +32,19 @@
                ![image](https://github.com/online2/wilianChartShowValue/blob/master/mobile/src/main/res/drawable-xhdpi/linbar_icon.png) <br><br>
        
     
-    
+    3：BarChartView 的绘制Value方法 <br> 具体使用方法可以看LineCardOne里面使用<br>
+            设置方法如下 <br>
+                          mChart.addData(dataset);<br>
+                                  //设置开启绘制文字<br>
+                                  mChart.setEnableDrawValue(true);<br>
+                                  //设置文字大小<br>
+                                  mChart.setValueTextSize(Tools.fromDpToPx(9));<br>
+                                  //设置文字颜色<br>
+                                  mChart.setValueColor(Color.parseColor("#000000"));<br>
+                                  //设置文字格式化和Y轴的使用的同一个代码<br>
+                                  mChart.setLabelsFormat(new DecimalFormat("##人"));<br>
+            效果图<br>
+                   ![image](https://github.com/online2/wilianChartShowValue/blob/master/mobile/src/main/res/drawable-xhdpi/barValue.png) <br><br>
+           
+        
+        
